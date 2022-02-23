@@ -8,16 +8,25 @@
         <th>Index</th>
         <th>Name</th>
         <th>Address</th>
+        <th>Edit</th>
     </tr>
 
 
     
     @foreach(var obj in Model)
     {   <tr>
-        <td>@obj.Id</td>
+            <td>@obj.Id</td>
             <td>@obj.Name</td>
             <td>@obj.Address</td>
+
+            <td >
+                <a asp-controller="Form" asp-action="Edit" asp-route-id="@obj.Id"> Edit</a>
+            </td>
+
         </tr>
+
+
+
     }
     
 

@@ -14,11 +14,67 @@ namespace FirstMVCApplication1.Controllers
             _db = db;
         }
 
+        //GET
         public IActionResult Index()
         {
             return View();
-
         }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(AddAddress objfc)
+        {
+            if (objfc.Name == objfc.Address) {
+                ModelState.AddModelError("CustomError", "Give name different from address.");
+            }
+            if (ModelState.IsValid) { 
+                _db.AddAddresses.Add(objfc);
+                _db.SaveChanges();
+                return RedirectToAction("ShowData");
+            }
+            return View(objfc);
+        }
+
+
+        //for editing
+        //GET
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0) {
+                return NotFound();
+            }
+            var addressfromDB = _db.AddAddresses.Find(id);
+
+            if (addressfromDB == null) {
+                return NotFound();
+            }
+
+            return View(addressfromDB);
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(AddAddress objfc)
+        {
+            if (objfc.Name == objfc.Address)
+            {
+                ModelState.AddModelError("CustomError", "Give name different from address.");
+            }
+            if (ModelState.IsValid)
+            {
+                //_db.AddAddresses.Add(objfc);
+                _db.AddAddresses.Update(objfc);
+                _db.SaveChanges();
+                return RedirectToAction("ShowData");
+            }
+            return View(objfc);
+        }
+
+
+
+
         public IActionResult ShowData() 
         {
             IEnumerable<AddAddress> obj_addressinfo_list = _db.AddAddresses;
