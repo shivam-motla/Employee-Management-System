@@ -73,6 +73,26 @@ namespace FirstMVCApplication1.Controllers
         }
 
 
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var addressfromDB = _db.AddAddresses.Find(id);
+
+            if (addressfromDB == null)
+            {
+                return NotFound();
+            }
+
+            _db.AddAddresses.Remove(addressfromDB);
+            _db.SaveChanges();
+            return RedirectToAction("ShowData");
+
+            //return View(addressfromDB);
+        }
+
 
 
         public IActionResult ShowData() 
