@@ -1,13 +1,27 @@
 ﻿@model IEnumerable<AddAddress>
 @{
 }
-<h1>Data</h1>
 
-<table class="table table-striped">
+<div style="    display: flex;
+    justify-content: space-between;">
+<h1>Data</h1>
+<div id="change_view">
+<input type="checkbox" id="switch"
+                    class="checkbox" />
+<label for="switch" class="toggle">
+&nbsp List view      &nbsp &nbsp  &nbsp Card view
+</label>
+</div>
+</div>
+
+
+<table class="table table-striped" id="table_view" style="display: none;">
     <tr>
         <th>Index </th>
         <th>Name</th>
         <th>Address</th>
+        <th>Country</th>
+        <th>State</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
@@ -19,6 +33,9 @@
             <td>@obj.Id</td>
             <td>@obj.Name</td>
             <td>@obj.Address</td>
+            <td>@obj.Country</td>
+            <td>@obj.State</td>
+
 
             <td >
                 <a asp-controller="Form" asp-action="Edit" asp-route-id="@obj.Id"> Edit</a>
@@ -36,3 +53,46 @@
     
 
 </table>
+
+
+
+  <div class="card_container row" id="card_view" >
+      @foreach(var obj in Model){
+        <!-- A div with card class for the card  -->
+        <div class="card_ column">
+
+            @if (@obj.imgpath != "" && @obj.imgpath != null)
+            {
+                @*<img class="card_img" src="@obj.imgpath" alt="@obj.Name 's image">*@
+                <img class="card_img" src="~/StoredData/UploadedImages/@obj.imgpath" alt="@obj.Name 's image">
+
+            }
+            else{<img class="card_img" src="~/StoredData/UploadedImages/defaultpotraitimage.jpg" alt="@obj.Name 's image"> }
+            @*<img class="card_img" src="https://iili.io/1yUPjI.jpg" alt="@obj.Name 's image">*@
+
+
+      <!-- A div with card__details class to hold the details in the card  -->
+      <div class="card__details">
+
+        <!-- Span with tag class for the tag -->
+        <span class="card_tag">Nature</span>
+
+        <span class="card_tag">Lake</span>
+
+        <!-- A div with name class for the name of the card -->
+        <div class="card_name">@obj.Name</div>
+
+        <p class="card_p"> Address: @obj.Address , @obj.State , @obj.Country </p>
+        <div style="    display: flex;
+    justify-content: space-between;">
+        <button type="button" class="card_button" onclick="location.href='@Url.Action("Edit", "Form",new {id =@obj.Id } )'">Edit</button>
+        <button style="color:red" type="button" class="card_button" onclick="location.href='@Url.Action("Delete", "Form",new {id =@obj.Id } )'">Delete</button>
+        </div>
+      </div>
+
+
+    </div>
+    }
+  </div>
+
+

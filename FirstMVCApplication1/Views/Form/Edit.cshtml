@@ -1,54 +1,87 @@
 ﻿@{
 }
+@*@model UploadData*@
 @model AddAddress
 
 <div className='container'>
-<form method="post" class="row g-3">
+<form enctype="multipart/form-data" asp-controller="Form" asp-action="Edit" method="post" class="row g-3">
 
-    <div asp-validation-summary="All"></div>
+        <div asp-validation-summary="All"></div>
 
-  <div class="col-12">
-    <label for="inputName" class="form-label">Full Name</label>
-    <input type="text" class="form-control" id="Name" name="Name" placeholder="Enter your name"></input>
-    <span asp-validation-for="Name" class="text-danger"></span>
-</div>
-  <div class="col-12">
-    <label for="inputAddress" class="form-label">Address</label>
-    <input type="text" class="form-control" id="Address" name="Address" placeholder="Apartment, studio, or floor"></input>
-    <span asp-validation-for="Address" class="text-danger"></span>  
-</div>
+        <div class="col-12">
+            <label for="inputName" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="Name" name="Name" placeholder="Enter your name" value="@Model.Name"></input>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col-12">
+            <label for="inputAddress" class="form-label">Address</label>
+            <input type="text" class="form-control" id="Address" name="Address" placeholder="Apartment, studio, or floor" value="@Model.Address"></input>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
 
-  <!--
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">City</label>
-    <input type="text" class="form-control" id="inputCity"></input>
-  </div>
-  <div class="col-md-4">
-    <label for="inputState" class="form-label">State</label>
-    <select id="inputState" class="form-select">
-      <option selected>Choose...</option>
-      <option>Uttar Pradesh</option>
-      <option>Delhi</option>
-    </select>
-  </div>
-  <div class="col-md-2">
-    <label for="inputZip" class="form-label">Zip</label>
-    <input type="text" class="form-control" id="inputZip"></input>
-  </div>
-  <div class="col-12">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck"></input>
-      <label class="form-check-label" for="gridCheck">
-        Permanent Position
-      </label>
-    </div>
-  </div>
-  -->
 
-  <div class="col-12">
-    <button type="submit" class="btn btn-primary">Update</button>
-  </div>
-</form>
+@*        @if (@Model.Country != null)
+        {
+            <script>
+                $('#inputCountry_edit').val("India");
+            </script>
+        }*@
+
+        <div id="smg">Here before</div>
+        <div class="col-md-6" id="country_add">
+            <label for="inputCountry" class="form-label">Country</label>
+            <select id="inputCountry" class="form-select" name="Country">
+
+                <option selected>Choose...</option>
+                <option>India</option>
+                <option>US</option>
+                <option>Russia</option>
+
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="inputState" class="form-label">State</label>
+            <select id="inputState" class="form-select" disabled name="State">
+                <option selected>Choose...</option>
+                <option>Uttar Pradesh</option>
+                <option>Delhi</option>
+            </select>
+        </div>
+
+
+
+        <div>
+            <input type="file" title="search image" id="file_upload" name="Imagem" onchange="show(this)" />
+        </div>
+
+
+
+
+        @*
+            <div class="col-md-6">
+            <label for="inputCity" class="form-label">City</label>
+            <input type="text" class="form-control" id="inputCity"></input>
+            </div>
+
+            <div class="col-md-2">
+            <label for="inputZip" class="form-label">Zip</label>
+            <input type="text" class="form-control" id="inputZip"></input>
+            </div>
+            <div class="col-12">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="gridCheck"></input>
+            <label class="form-check-label" for="gridCheck">
+            Permanent Position
+            </label>
+            </div>
+            </div>
+        *@
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </form>
 </div>
 
 @section Scripts{
