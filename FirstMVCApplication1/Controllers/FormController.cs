@@ -46,13 +46,13 @@ namespace FirstMVCApplication1.Controllers
                     //var filePath = Path.Combine("\\UploadedFiles", Path.GetRandomFileName());
                     //filePath = filePath + ".jpg";
 
-                var filePath= "D:\\web_development\\FirstMVCApplication1\\FirstMVCApplication1\\wwwroot\\StoredData\\UploadedImages";
+                
                     var fileName = Path.GetRandomFileName();
                     fileName = fileName + ".jpg";
-                    filePath = Path.Combine(filePath, fileName);
+                    
                     //filePath = filePath + ".jpg";
 
-                    objfc.Imagem.CopyTo(new FileStream(filePath, FileMode.Create));
+                    
                     addAddress1.imgpath = fileName;
 
 
@@ -64,6 +64,18 @@ namespace FirstMVCApplication1.Controllers
 
                 _db.AddAddresses.Add(addAddress1);
                 _db.SaveChanges();
+                int addAddress1id = addAddress1.Id;
+                Directory.CreateDirectory("D:\\web_development\\FirstMVCApplication1\\FirstMVCApplication1\\wwwroot\\StoredData\\UploadedImages\\" + addAddress1id.ToString());
+                string destpath = "D:\\web_development\\FirstMVCApplication1\\FirstMVCApplication1\\wwwroot\\StoredData\\UploadedImages\\" + addAddress1id.ToString() + "\\defaultpotraitimage.jpg";
+                System.IO.File.Copy("D:\\web_development\\FirstMVCApplication1\\FirstMVCApplication1\\wwwroot\\StoredData\\UploadedImages\\defaultpotraitimage.jpg", destpath);
+
+                if (objfc.Imagem != null)
+                {
+                    var filePath = "D:\\web_development\\FirstMVCApplication1\\FirstMVCApplication1\\wwwroot\\StoredData\\UploadedImages\\" + addAddress1id.ToString();
+                    filePath = Path.Combine(filePath, addAddress1.imgpath);
+                    objfc.Imagem.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+
                 return RedirectToAction("ShowData");
             }
             return View(objfc);
@@ -121,13 +133,13 @@ namespace FirstMVCApplication1.Controllers
                     //var filePath = Path.Combine("\\UploadedFiles", Path.GetRandomFileName());
                     //filePath = filePath + ".jpg";
 
-                    var filePath = "D:\\web_development\\FirstMVCApplication1\\FirstMVCApplication1\\wwwroot\\StoredData\\UploadedImages";
+
                     var fileName = Path.GetRandomFileName();
                     fileName = fileName + ".jpg";
-                    filePath = Path.Combine(filePath, fileName);
+
                     //filePath = filePath + ".jpg";
 
-                    objfc.Imagem.CopyTo(new FileStream(filePath, FileMode.Create));
+
                     addAddress1.imgpath = fileName;
 
 
@@ -139,6 +151,16 @@ namespace FirstMVCApplication1.Controllers
 
                 _db.AddAddresses.Update(addAddress1);
                 _db.SaveChanges();
+                int addAddress1id = addAddress1.Id;
+
+
+                if (objfc.Imagem != null)
+                {
+                    var filePath = "D:\\web_development\\FirstMVCApplication1\\FirstMVCApplication1\\wwwroot\\StoredData\\UploadedImages\\" + addAddress1id.ToString();
+                    filePath = Path.Combine(filePath, addAddress1.imgpath);
+                    objfc.Imagem.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+
                 return RedirectToAction("ShowData");
             }
             return View(objfc);
@@ -158,6 +180,8 @@ namespace FirstMVCApplication1.Controllers
                 return NotFound();
             }
 
+           
+            Directory.Delete("D:\\web_development\\FirstMVCApplication1\\FirstMVCApplication1\\wwwroot\\StoredData\\UploadedImages\\" + addressfromDB.Id.ToString(),true);
             _db.AddAddresses.Remove(addressfromDB);
             _db.SaveChanges();
             return RedirectToAction("ShowData");

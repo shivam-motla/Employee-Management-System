@@ -64,7 +64,7 @@
             @if (@obj.imgpath != "" && @obj.imgpath != null)
             {
                 @*<img class="card_img" src="@obj.imgpath" alt="@obj.Name 's image">*@
-                <img class="card_img" src="~/StoredData/UploadedImages/@obj.imgpath" alt="@obj.Name 's image">
+                <img class="card_img" src="~/StoredData/UploadedImages/@obj.Id/@obj.imgpath" alt="@obj.Name 's image">
 
             }
             else{<img class="card_img" src="~/StoredData/UploadedImages/defaultpotraitimage.jpg" alt="@obj.Name 's image"> }
@@ -75,9 +75,9 @@
       <div class="card__details">
 
         <!-- Span with tag class for the tag -->
-        <span class="card_tag">Nature</span>
+@*        <span class="card_tag">Nature</span>
 
-        <span class="card_tag">Lake</span>
+        <span class="card_tag">Lake</span>*@
 
         <!-- A div with name class for the name of the card -->
         <div class="card_name">@obj.Name</div>

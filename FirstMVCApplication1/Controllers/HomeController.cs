@@ -1,4 +1,5 @@
-﻿using FirstMVCApplication1.Models;
+﻿using FirstMVCApplication1.Data;
+using FirstMVCApplication1.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +7,24 @@ namespace FirstMVCApplication1.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ApplicationDbContext _db;
+
+        public HomeController(ApplicationDbContext db)
         {
-            _logger = logger;
+            _db = db;
         }
+
+        //public HomeController(ILogger<HomeController> logger)
+        //{
+        //    _logger = logger;
+        //}
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<AddAddress> obj_addressinfo_list = _db.AddAddresses;
+            return View(obj_addressinfo_list);
         }
 
         public IActionResult Privacy()
